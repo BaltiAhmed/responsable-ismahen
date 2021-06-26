@@ -17,6 +17,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import GroupWorkIcon from "@material-ui/icons/GroupWork";
 import { Link } from "react-router-dom";
+import NavMenu from './navMenu'
 
 const drawerWidth = 240;
 
@@ -112,6 +113,9 @@ export default function DrawerMenu(props) {
           <Typography variant="h6" noWrap>
             RFI
           </Typography>
+          <div style={{marginLeft:'90%'}} >
+            <NavMenu/>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -141,6 +145,24 @@ export default function DrawerMenu(props) {
                 <GroupWorkIcon color="primary" />
               </ListItemIcon>
               <ListItemText primary="Gestion des ouvrier" />
+            </ListItem>
+          </Link>
+          <Link to="/liste-magasinier" style={{textDecoration:'none' , color:'black'}}>
+            <ListItem button key="">
+              <ListItemIcon>
+                {" "}
+                <GroupWorkIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText primary="Gestion des magasinier" />
+            </ListItem>
+          </Link>
+          <Link to="/liste-fournisseur" style={{textDecoration:'none' , color:'black'}}>
+            <ListItem button key="">
+              <ListItemIcon>
+                {" "}
+                <GroupWorkIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText primary="Gestion des fournisseur" />
             </ListItem>
           </Link>
         </List>

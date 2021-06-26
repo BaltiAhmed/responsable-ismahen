@@ -56,7 +56,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ListeOuvrier = (props) => {
+const ListeMagasinier = (props) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -76,14 +76,14 @@ const ListeOuvrier = (props) => {
   useEffect(() => {
     const sendRequest = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/ouvrier/`);
+        const response = await fetch(`http://localhost:5000/api/magasinier/`);
 
         const responseData = await response.json();
         if (!response.ok) {
           throw new Error(responseData.message);
         }
 
-        setlist(responseData.ouvrier);
+        setlist(responseData.existingUserUser);
       } catch (err) {
         seterror(err.message);
       }
@@ -93,7 +93,6 @@ const ListeOuvrier = (props) => {
   }, []);
 
   console.log(list);
-
   const [searchTerm, setSearchTerm] = useState("");
 
   const handelSearch = (e) => {
@@ -106,13 +105,13 @@ const ListeOuvrier = (props) => {
           <Col></Col>
           <Col xs={10}>
             <div>
-              <Link to="/ajout-ouvrier">
-                <BTNAdd title="ajout ouvrier" />
+              <Link to="/ajout-magasinier">
+                <BTNAdd title="ajout magasinier" />
               </Link>
             </div>
             <ErrorModel error={error} />
             <SuccessModel success={success} />
-            <div style={{ marginLeft: "80%" }}>
+            <div style={{marginLeft:'80%'}}>
               <Input
                 id="input-with-icon-adornment"
                 startAdornment={
@@ -163,7 +162,7 @@ const ListeOuvrier = (props) => {
                             {row.tel}
                           </StyledTableCell>
                           <StyledTableCell align="right">
-                            <Link to={`/update-ouvrier/${row._id}`}>
+                            <Link to={`/update-magasinier/${row._id}`}>
                               <UpdateIcon style={{ color: "green" }} />
                             </Link>
 
@@ -172,7 +171,7 @@ const ListeOuvrier = (props) => {
                               onClick={async (event) => {
                                 try {
                                   let response = await fetch(
-                                    `http://localhost:5000/api/ouvrier/${row._id}`,
+                                    `http://localhost:5000/api/magasinier/${row._id}`,
                                     {
                                       method: "DELETE",
                                       headers: {
@@ -217,4 +216,4 @@ const ListeOuvrier = (props) => {
   );
 };
 
-export default ListeOuvrier;
+export default ListeMagasinier;
