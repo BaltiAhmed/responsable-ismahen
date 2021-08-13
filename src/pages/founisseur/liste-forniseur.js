@@ -105,14 +105,14 @@ const ListeFournisseur = (props) => {
         <Row>
           <Col></Col>
           <Col xs={10}>
-            <div style={{width:'10%' , marginBottom:'-20px'}}>
+            <div style={{ width: "10%", marginBottom: "-20px" }}>
               <Link to="/ajout-fournisseur">
                 <BTNAdd title="ajout fournisseur" />
               </Link>
             </div>
             <ErrorModel error={error} />
             <SuccessModel success={success} />
-            <div style={{marginLeft:'80%'}}>
+            <div style={{ marginLeft: "80%" }}>
               <Input
                 id="input-with-icon-adornment"
                 startAdornment={
