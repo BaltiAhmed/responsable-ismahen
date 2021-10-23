@@ -19,7 +19,8 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import { useParams } from "react-router-dom";
+import TextField from "@material-ui/core/TextField";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -51,13 +52,22 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 700,
   },
-});
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+}));
 
-const ListeOuvrier = (props) => {
+const Pointage = (props) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -74,17 +84,20 @@ const ListeOuvrier = (props) => {
   const [error, seterror] = useState(null);
   const [success, setsuccess] = useState(null);
 
+  const id = useParams().id;
   useEffect(() => {
     const sendRequest = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/ouvrier/`);
+        const response = await fetch(
+          `http://localhost:5000/api/pointage/ouvrier/${id}`
+        );
 
         const responseData = await response.json();
         if (!response.ok) {
           throw new Error(responseData.message);
         }
 
-        setlist(responseData.ouvrier);
+        setlist(responseData.pointage);
       } catch (err) {
         seterror(err.message);
       }
@@ -100,6 +113,7 @@ const ListeOuvrier = (props) => {
   const handelSearch = (e) => {
     setSearchTerm(e.target.value);
   };
+  console.log(searchTerm);
   return (
     <div>
       <Container>
@@ -113,26 +127,14 @@ const ListeOuvrier = (props) => {
             </div>
             <ErrorModel error={error} />
             <SuccessModel success={success} />
-            <div style={{ marginLeft: "80%" }}>
-              <Input
-                id="input-with-icon-adornment"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                }
-                onChange={handelSearch}
-              />
-            </div>
+            
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell>Nom</StyledTableCell>
-                    <StyledTableCell align="right">Email</StyledTableCell>
-                    <StyledTableCell align="right">Adresse</StyledTableCell>
-                    <StyledTableCell align="right">Téléphone</StyledTableCell>
-                    <StyledTableCell align="right">Action</StyledTableCell>
+                    <StyledTableCell>Date</StyledTableCell>
+                    <StyledTableCell align="right">Heure</StyledTableCell>
+                    <StyledTableCell align="right">Type</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -141,7 +143,7 @@ const ListeOuvrier = (props) => {
                       .filter((row) => {
                         if (searchTerm == "") {
                           return list;
-                        } else if (row.name.includes(searchTerm)) {
+                        } else if (row.date.includes(searchTerm)) {
                           return row;
                         }
                       })
@@ -152,52 +154,13 @@ const ListeOuvrier = (props) => {
                       .map((row) => (
                         <StyledTableRow key={row.name}>
                           <StyledTableCell component="th" scope="row">
-                            {row.name}
+                            {row.date}
                           </StyledTableCell>
                           <StyledTableCell align="right">
-                            {row.email}
+                            {row.heure}
                           </StyledTableCell>
                           <StyledTableCell align="right">
-                            {row.adresse}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {row.tel}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            <Link to={`/update-ouvrier/${row._id}`}>
-                              <UpdateIcon style={{ color: "green" }} />
-                            </Link>
-
-                            <DeleteForeverIcon
-                              style={{ color: "red" }}
-                              onClick={async (event) => {
-                                try {
-                                  let response = await fetch(
-                                    `http://localhost:5000/api/ouvrier/${row._id}`,
-                                    {
-                                      method: "DELETE",
-                                      headers: {
-                                        "Content-Type": "application/json",
-                                      },
-                                    }
-                                  );
-                                  let responsedata = await response.json();
-                                  if (!response.ok) {
-                                    throw new Error(responsedata.message);
-                                  }
-                                  setlist(
-                                    list.filter((el) => el._id !== row._id)
-                                  );
-                                  setsuccess("ouvrier bien suprimer");
-                                } catch (err) {
-                                  console.log(err);
-                                  seterror(err.message || "il y a un probleme");
-                                }
-                              }}
-                            />
-                            <Link to={`/pointage/${row._id}`}>
-                              <EventAvailableIcon style={{ color: "blue" }} />
-                            </Link>
+                            {row.type}
                           </StyledTableCell>
                         </StyledTableRow>
                       ))}
@@ -221,4 +184,4 @@ const ListeOuvrier = (props) => {
   );
 };
 
-export default ListeOuvrier;
+export default Pointage;
