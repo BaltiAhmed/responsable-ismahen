@@ -165,6 +165,15 @@ export default function DrawerMenu(props) {
               <ListItemText primary="Gestion des fournisseur" />
             </ListItem>
           </Link>
+          <Link to="/commande" style={{textDecoration:'none' , color:'black'}}>
+            <ListItem button key="">
+              <ListItemIcon>
+                {" "}
+                <GroupWorkIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText primary="Commandes" />
+            </ListItem>
+          </Link>
         </List>
         <Divider />
       </Drawer>

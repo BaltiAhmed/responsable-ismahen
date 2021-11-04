@@ -14,6 +14,7 @@ import ListeFournisseur from "./pages/founisseur/liste-forniseur";
 import AjoutFournisseur from "./pages/founisseur/ajout-fourniseur";
 import UpdateFournisseur from "./pages/founisseur/update-fourniseur";
 import Pointage from "./pages/pointage/list";
+import Commande from "./pages/commande/Commande";
 
 function App() {
   const { userId, token, login, logout } = UserAuth();
@@ -31,6 +32,7 @@ function App() {
         <Route path="/ajout-fournisseur" component={AjoutFournisseur} />
         <Route path="/update-fournisseur/:id" component={UpdateFournisseur} />
         <Route path="/pointage/:id" component={Pointage} />
+        <Route path="/commande" component={Commande} />
       </React.Fragment>
     );
   } else {
