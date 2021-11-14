@@ -19,7 +19,7 @@ function MyVerticallyCenteredModal(props) {
           throw new Error(responseData.message);
         }
 
-        setList(responseData.existingUserUser);
+        setList(responseData.existingUser);
       } catch (err) {
         seterror(err.message);
       }
