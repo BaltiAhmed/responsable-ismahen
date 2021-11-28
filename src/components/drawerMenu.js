@@ -138,7 +138,16 @@ export default function DrawerMenu(props) {
         </div>
         <Divider />
         <List>
-          <Link to="/" style={{textDecoration:'none' , color:'black'}}>
+        <Link to="/" style={{textDecoration:'none' , color:'black'}}>
+            <ListItem button key="">
+              <ListItemIcon>
+                {" "}
+                <GroupWorkIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText primary="Satistiques" />
+            </ListItem>
+          </Link>
+          <Link to="/ouvrier" style={{textDecoration:'none' , color:'black'}}>
             <ListItem button key="">
               <ListItemIcon>
                 {" "}

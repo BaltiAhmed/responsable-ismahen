@@ -15,6 +15,7 @@ import AjoutFournisseur from "./pages/founisseur/ajout-fourniseur";
 import UpdateFournisseur from "./pages/founisseur/update-fourniseur";
 import Pointage from "./pages/pointage/list";
 import Commande from "./pages/commande/Commande";
+import ChartsPage from "./pages/chart";
 
 function App() {
   const { userId, token, login, logout } = UserAuth();
@@ -22,7 +23,8 @@ function App() {
   if (token) {
     routes = (
       <React.Fragment>
-        <Route path="/" exact component={ListeOuvrier} />
+        <Route path="/" exact component={ChartsPage} />
+        <Route path="/ouvrier"  component={ListeOuvrier} />
         <Route path="/ajout-ouvrier" component={AjoutOuvrier} />
         <Route path="/update-ouvrier/:id" component={UpdateOuvrier} />
         <Route path="/liste-magasinier" component={ListeMagasinier} />
