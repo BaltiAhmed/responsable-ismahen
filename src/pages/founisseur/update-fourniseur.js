@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import ErrorModel from "../../models/error-models";
 import SuccessModel from "../../models/success-models";
-import {useParams} from 'react-router-dom'
+import { useParams } from "react-router-dom";
 
 const UpdateFournisseur = (props) => {
   const [nom, setNom] = useState();
@@ -11,6 +11,30 @@ const UpdateFournisseur = (props) => {
   const [adresse, setAdresse] = useState();
   const [error, seterror] = useState(null);
   const [success, setsuccess] = useState(null);
+
+  useEffect(() => {
+    const sendRequest = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/fournisseur/${id}`
+        );
+
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+
+        setNom(responseData.fournisseur.name);
+        setEmail(responseData.fournisseur.email);
+        setAdresse(responseData.fournisseur.adresse);
+        setTel(responseData.fournisseur.tel);
+      } catch (err) {
+        seterror(err.message);
+      }
+    };
+
+    sendRequest();
+  }, []);
 
   const onchange = (e) => {
     if (e.target.name === "nom") {
@@ -24,24 +48,27 @@ const UpdateFournisseur = (props) => {
     }
   };
 
-  const id =  useParams().id
+  const id = useParams().id;
 
   const submit = async (e) => {
     e.preventDefault();
 
     try {
-      let response = await fetch(`http://localhost:5000/api/fournisseur/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: nom,
-          email: email,
-          tel: tel,
-          adresse: adresse,
-        }),
-      });
+      let response = await fetch(
+        `http://localhost:5000/api/fournisseur/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: nom,
+            email: email,
+            tel: tel,
+            adresse: adresse,
+          }),
+        }
+      );
       let responsedata = await response.json();
       if (!response.ok) {
         seterror(responsedata.message);
@@ -66,6 +93,7 @@ const UpdateFournisseur = (props) => {
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label>Nom</Form.Label>
                   <Form.Control
+                    value={nom}
                     placeholder="Nom"
                     name="nom"
                     onChange={onchange}
@@ -76,6 +104,7 @@ const UpdateFournisseur = (props) => {
                 <Form.Group as={Col} controlId="formGridPassword">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
+                    value={email}
                     type="email"
                     placeholder="Email"
                     name="email"
@@ -88,6 +117,7 @@ const UpdateFournisseur = (props) => {
               <Form.Group controlId="formGridAddress1">
                 <Form.Label>Telephone</Form.Label>
                 <Form.Control
+                  value={tel}
                   placeholder="90762489"
                   name="tel"
                   onChange={onchange}
@@ -98,6 +128,7 @@ const UpdateFournisseur = (props) => {
               <Form.Group controlId="formGridAddress2">
                 <Form.Label>Addresse</Form.Label>
                 <Form.Control
+                  value={adresse}
                   placeholder="Apartment, studio"
                   name="adresse"
                   onChange={onchange}
