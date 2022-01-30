@@ -244,14 +244,14 @@ const ChartsPage = () => {
   useEffect(() => {
     const sendRequest = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/commande/`);
+        const response = await fetch(`http://localhost:5000/api/commandeExterne/`);
 
         const responseData = await response.json();
         if (!response.ok) {
           throw new Error(responseData.message);
         }
 
-        setEvenement(responseData.existingUser);
+        setEvenement(responseData.existingCommandeExterne);
       } catch (err) {
         seterror(err.message);
       }
@@ -292,8 +292,9 @@ const ChartsPage = () => {
         hoverBorderColor: "rgba(255,99,132,1)",
         data: [
           client && client.length,
-          evenement && evenement.length,
           BonPlan && BonPlan.length,
+          evenement && evenement.length,
+          
           
         ],
       },

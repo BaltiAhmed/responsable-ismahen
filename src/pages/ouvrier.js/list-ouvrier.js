@@ -19,7 +19,8 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
+import { Form } from "react-bootstrap";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -96,9 +97,14 @@ const ListeOuvrier = (props) => {
   console.log(list);
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchDep, setSearchDep] = useState("");
 
   const handelSearch = (e) => {
     setSearchTerm(e.target.value);
+  };
+
+  const HandelSearchDep = (e) => {
+    setSearchDep(e.target.value);
   };
   return (
     <div>
@@ -113,17 +119,40 @@ const ListeOuvrier = (props) => {
             </div>
             <ErrorModel error={error} />
             <SuccessModel success={success} />
-            <div style={{ marginLeft: "80%" }}>
-              <Input
-                id="input-with-icon-adornment"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                }
-                onChange={handelSearch}
-              />
+            <div style={{ whiteSpace: "nowrap" }}>
+              <div
+                style={{
+                  marginLeft: "50%",
+                  marginRight: "10%",
+                  display: "inline-block",
+                }}
+              >
+                <Input
+                  id="input-with-icon-adornment"
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  }
+                  onChange={handelSearch}
+                />
+              </div>
+              <div style={{ display: "inline-block" }}>
+                <Form.Control
+                  as="select"
+                  defaultValue="Technique"
+                  name="dep"
+                  placeholder="Choisir le département"
+                  onChange={HandelSearchDep}
+                >
+                  <option>Technique</option>
+                  <option>Administrative</option>
+                  <option>Finance</option>
+                  <option>Comerciale</option>
+                </Form.Control>
+              </div>
             </div>
+
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="customized table">
                 <TableHead>
@@ -132,12 +161,20 @@ const ListeOuvrier = (props) => {
                     <StyledTableCell align="right">Email</StyledTableCell>
                     <StyledTableCell align="right">Adresse</StyledTableCell>
                     <StyledTableCell align="right">Téléphone</StyledTableCell>
+                    <StyledTableCell align="right">Département</StyledTableCell>
                     <StyledTableCell align="right">Action</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {list &&
                     list
+                      .filter((row) => {
+                        if (searchDep == "") {
+                          return list;
+                        } else if (row.dep.includes(searchDep)) {
+                          return row;
+                        }
+                      })
                       .filter((row) => {
                         if (searchTerm == "") {
                           return list;
@@ -162,6 +199,9 @@ const ListeOuvrier = (props) => {
                           </StyledTableCell>
                           <StyledTableCell align="right">
                             {row.tel}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {row.dep}
                           </StyledTableCell>
                           <StyledTableCell align="right">
                             <Link to={`/update-ouvrier/${row._id}`}>

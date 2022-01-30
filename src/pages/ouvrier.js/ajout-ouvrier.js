@@ -8,6 +8,7 @@ const AjoutOuvrier = (props) => {
   const [email, setEmail] = useState();
   const [tel, setTel] = useState();
   const [adresse, setAdresse] = useState();
+  const [dep, setDep] = useState();
   const [error, seterror] = useState(null);
   const [success, setsuccess] = useState(null);
 
@@ -20,6 +21,8 @@ const AjoutOuvrier = (props) => {
       setTel(e.target.value);
     } else if (e.target.name === "adresse") {
       setAdresse(e.target.value);
+    }else if (e.target.name === "dep") {
+      setDep(e.target.value);
     }
   };
 
@@ -37,6 +40,7 @@ const AjoutOuvrier = (props) => {
           email: email,
           tel: tel,
           adresse: adresse,
+          dep: dep,
         }),
       });
       let responsedata = await response.json();
@@ -100,6 +104,16 @@ const AjoutOuvrier = (props) => {
                   onChange={onchange}
                   required
                 />
+              </Form.Group>
+
+              <Form.Group controlId="formGridState">
+                <Form.Label>Département</Form.Label>
+                <Form.Control as="select" defaultValue="Technique" name="dep" onChange={onchange} required>
+                  <option>Technique</option>
+                  <option>Administrative</option>
+                  <option>Finance</option>
+                  <option>Comerciale</option>
+                </Form.Control>
               </Form.Group>
 
               <Button variant="primary" type="submit">
