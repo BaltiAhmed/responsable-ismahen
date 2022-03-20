@@ -5,6 +5,7 @@ import SuccessModel from "../../models/success-models";
 
 const AjoutFournisseur = (props) => {
   const [nom, setNom] = useState();
+  const [cin, setCin] = useState();
   const [email, setEmail] = useState();
   const [tel, setTel] = useState();
   const [adresse, setAdresse] = useState();
@@ -20,6 +21,8 @@ const AjoutFournisseur = (props) => {
       setTel(e.target.value);
     } else if (e.target.name === "adresse") {
       setAdresse(e.target.value);
+    }else if (e.target.name === "cin") {
+      setCin(e.target.value);
     }
   };
 
@@ -33,6 +36,7 @@ const AjoutFournisseur = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          cin:cin,
           name: nom,
           email: email,
           tel: tel,
@@ -65,6 +69,16 @@ const AjoutFournisseur = (props) => {
                   <Form.Control
                     placeholder="Nom"
                     name="nom"
+                    onChange={onchange}
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form.Label>CIN</Form.Label>
+                  <Form.Control
+                    placeholder="CIN"
+                    name="cin"
                     onChange={onchange}
                     required
                   />

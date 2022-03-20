@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 
 const UpdateOuvrier = (props) => {
   const [nom, setNom] = useState();
+  const [cin, setCin] = useState();
   const [email, setEmail] = useState();
   const [tel, setTel] = useState();
   const [adresse, setAdresse] = useState();
@@ -23,7 +24,7 @@ const UpdateOuvrier = (props) => {
         if (!response.ok) {
           throw new Error(responseData.message);
         }
-
+        setCin(responseData.ouvrier.cin)
         setNom(responseData.ouvrier.name);
         setEmail(responseData.ouvrier.email);
         setAdresse(responseData.ouvrier.adresse);
@@ -45,6 +46,8 @@ const UpdateOuvrier = (props) => {
       setTel(e.target.value);
     } else if (e.target.name === "adresse") {
       setAdresse(e.target.value);
+    }else if (e.target.name === "cin") {
+      setCin(e.target.value);
     }
   };
 
@@ -60,6 +63,7 @@ const UpdateOuvrier = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          cin:cin,
           name: nom,
           email: email,
           tel: tel,
@@ -93,6 +97,17 @@ const UpdateOuvrier = (props) => {
                     value={nom}
                     placeholder="Nom"
                     name="nom"
+                    onChange={onchange}
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form.Label>CIN</Form.Label>
+                  <Form.Control
+                    value={cin}
+                    placeholder="CIN"
+                    name="cin"
                     onChange={onchange}
                     required
                   />

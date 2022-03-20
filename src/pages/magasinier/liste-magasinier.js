@@ -127,6 +127,7 @@ const ListeMagasinier = (props) => {
                 <TableHead>
                   <TableRow>
                     <StyledTableCell>Nom</StyledTableCell>
+                    <StyledTableCell>CIN</StyledTableCell>
                     <StyledTableCell align="right">Email</StyledTableCell>
                     <StyledTableCell align="right">Adresse</StyledTableCell>
                     <StyledTableCell align="right">Téléphone</StyledTableCell>
@@ -151,6 +152,9 @@ const ListeMagasinier = (props) => {
                         <StyledTableRow key={row.name}>
                           <StyledTableCell component="th" scope="row">
                             {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">
+                            {row.cin}
                           </StyledTableCell>
                           <StyledTableCell align="right">
                             {row.email}
